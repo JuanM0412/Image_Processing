@@ -17,7 +17,8 @@ struct Arguments {
     string inputImageName;
     string outputImageName;
     float angle;
-    float scale;
+    float xScale;
+    float yScale;
     Mode mode;
     bool valid = false;
 };

@@ -9,7 +9,7 @@ Arguments parseArguments(int argc, char* argv[]) {
     Arguments args;
     args.valid = false;
     args.angle = 0;
-    args.scale = 0;
+    args.xScale = 0;
     args.mode = Mode::CONVENTIONAL;
 
     if (argc < 2) {
@@ -57,10 +57,23 @@ Arguments parseArguments(int argc, char* argv[]) {
                 return args;
             }
         }
-        else if (option == "-s" || option == "--scale") {
+        else if (option == "-xs" || option == "--x_scale") {
             if (i + 1 < argc) {
                 try {
-                    args.scale = stof(argv[++i]);
+                    args.xScale = stof(argv[++i]);
+                } catch (const exception&) {
+                    cerr << "Error: Invalid scale value." << endl;
+                    return args;
+                }
+            } else {
+                cerr << "Error: Missing scale value." << endl;
+                return args;
+            }
+        }
+        else if (option == "-ys" || option == "--y_scale") {
+            if (i + 1 < argc) {
+                try {
+                    args.yScale = stof(argv[++i]);
                 } catch (const exception&) {
                     cerr << "Error: Invalid scale value." << endl;
                     return args;
@@ -97,7 +110,8 @@ void showHelp() {
               << "  -i, --input_image_name <image_name>             Load specified image\n"
               << "  -o, --output_image_name <resulting_image_name>              Save resulting image with specified name\n"
               << "  -a, --angle <value>             Rotate image with specified angle\n"
-              << "  -s, --scale <value>             Scale image with specified scale\n"
+              << "  -xs, --x_scale <value>             Scale image with specified scale (in X)\n"
+              << "  -xs, --x_scale <value>             Scale image with specified scale (in Y)\n"
               << "  -b, --buddy_system              Activate buddy system mode (by default the program doesn't use buddy system)\n";
 }
 
