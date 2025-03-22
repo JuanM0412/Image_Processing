@@ -57,3 +57,29 @@ bool Image::SaveImage(const std::string &outputImageName) {
         return false;
     }
 }
+
+Image Image::scaleImage(float xScale, float yScale, Image &originalImage) {
+    cout << "Original image size: " << originalImage.width << "x" << originalImage.height << endl;
+    float newWidth = originalImage.width * xScale;
+    float newHeight = originalImage.height * yScale;
+    cout << "New image size: " << newWidth << "x" << newHeight << endl;
+
+    float xScaleFactor = (float)originalImage.width / newWidth;
+    float yScaleFactor = (float)originalImage.height / newHeight;
+
+    Image scaledImage;
+    scaledImage.width = newWidth;
+    scaledImage.height = newHeight;
+    scaledImage.pixelesChar.resize(newHeight, vector<PixelChar>(newWidth));
+
+    for (int y = 0; y < newHeight; ++y) {
+        for (int x = 0; x < newWidth; ++x) {
+            int newX = (int)x * xScaleFactor;
+            int newY = (int)y * yScaleFactor;
+
+            scaledImage.pixelesChar[y][x] = originalImage.pixelesChar[newY][newX];
+        }
+    }
+
+    return scaledImage;
+}

@@ -23,6 +23,8 @@ class Image {
         bool loadImage(const std::string &inputImageName);
         bool SaveImage(const std::string &outputImageName);
 
+        static Image scaleImage(float xScale, float yScale, Image &originalImage);
+
     private:
         int width, height;
 
