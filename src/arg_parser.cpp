@@ -88,7 +88,6 @@ Arguments parseArguments(int argc, char* argv[]) {
     return args;
 }
 
-
 void showHelp() {
     cout << "Usage: ./image_processing -i <image_name> -o <resulting_image_name> -a <value> -s <value>\n"
               << "Options:\n"
