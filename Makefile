@@ -9,7 +9,7 @@ BIN_DIR = bin
 
 TARGET = $(BIN_DIR)/image_processing
 
-SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/arg_parser.cpp $(SRC_DIR)/image.cpp $(SRC_DIR)/stb_wrapper.cpp
+SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/arg_parser.cpp $(SRC_DIR)/image.cpp $(SRC_DIR)/stb_wrapper.cpp $(SRC_DIR)/buddy_image_memory_manager.cpp $(SRC_DIR)/buddy_allocator.cpp $(SRC_DIR)/vector_image_memory_manager.cpp
 
 OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 

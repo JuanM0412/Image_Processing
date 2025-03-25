@@ -27,4 +27,16 @@ Arguments parseArguments(int argc, char* argv[]);
 void showHelp();
 void showVersion();
 
+inline std::ostream& operator<<(std::ostream& os, Mode mode) {
+    switch (mode) {
+        case Mode::BUDDY_SYSTEM:
+            os << "BUDDY_SYSTEM";
+            break;
+        case Mode::CONVENTIONAL:
+            os << "CONVENTIONAL";
+            break;
+    }
+    return os;
+}
+
 #endif

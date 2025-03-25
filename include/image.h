@@ -1,35 +1,38 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include <vector>
 #include <string>
-#include <cstddef>
-#include "stb_image.h"
-#include "stb_image_write.h"
-
-struct PixelChar {
-    unsigned char r, g, b;
-};
-
-struct PixelInt {
-    int r, g, b;
-};
+#include <iostream>
+#include "IImageMemoryManager.h"
+#include "arg_parser.h"
+#include "vector_image_memory_manager.h"
+#include "buddy_image_memory_manager.h"
 
 class Image {
     public:
-        Image();
+        Image() = default;
+        explicit Image(IImageMemoryManager* memManager);
+        Image(const Image& other);
+        Image(Image&& other) noexcept;
+        
+        Image& operator=(const Image& other);
+        Image& operator=(Image&& other) noexcept;
+        
         ~Image();
-
+    
         bool loadImage(const std::string &inputImageName);
-        bool SaveImage(const std::string &outputImageName);
-
-        static Image scaleImage(float xScale, float yScale, Image &originalImage);
-
+        bool saveImage(const std::string &outputImageName);
+        
+        static Image scaleImage(float xScale, float yScale, Image &originalImage, Mode mode = Mode::CONVENTIONAL);
+        static Image rotateImage(float angle, Image &originalImage, Mode mode = Mode::CONVENTIONAL);
+        
+        int getWidth() const { return width; }
+        int getHeight() const { return height; }
+    
     private:
-        int width, height;
-
-        std::vector<std::vector<PixelChar>> pixelesChar;
-        std::vector<std::vector<PixelInt>> pixelesInt;
+        int width = 0;
+        int height = 0;
+        IImageMemoryManager* memoryManager = nullptr;
 };
 
-#endif
+#endif // IMAGE_H
