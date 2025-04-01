@@ -13,6 +13,14 @@ SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/arg_parser.cpp $(SRC_DIR)/image.cpp $(SRC_
 
 OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
+ifeq ($(OS),Windows_NT)
+    MKDIR = mkdir
+    RM = rmdir /s /q
+else
+    MKDIR = mkdir -p
+    RM = rm -rf
+endif
+
 all: $(TARGET)
 
 $(TARGET): $(BIN_DIR) $(OBJ_DIR) $(OBJS)
@@ -22,10 +30,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -c $< -o $@
 
 $(BIN_DIR) $(OBJ_DIR):
-	mkdir -p $@
+	$(MKDIR) $@
 
 clean:
-	rm -rf $(OBJ_DIR)/*.o $(TARGET)
+	$(RM) $(OBJ_DIR)/*.o $(TARGET)
 
 dist-clean: clean
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	$(RM) $(OBJ_DIR) $(BIN_DIR)

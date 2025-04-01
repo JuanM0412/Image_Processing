@@ -35,21 +35,16 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
-        image.saveImage(args.outputImageName);
-
         try {
-            Image scaled_image = Image::scaleImage(args.xScale, args.yScale, image, args.mode);
-            scaled_image.saveImage("scaled_" + args.outputImageName);
+            Image transformed_image = Image::scaleImage(args.xScale, args.yScale, image, args.mode);
+            transformed_image = Image::rotateImage(args.angle, transformed_image, args.mode);
+
+            transformed_image.saveImage(args.outputImageName);
         } catch (const std::exception& e) {
-            cerr << "Scaling failed: " << e.what() << endl;
+            cerr << "Transformation failed: " << e.what() << endl;
         }
 
-        try {
-            Image rotated_image = Image::rotateImage(args.angle, image, args.mode);
-            rotated_image.saveImage("rotated_" + args.outputImageName);
-        } catch (const std::exception& e) {
-            cerr << "Rotation failed: " << e.what() << endl;
-        }
+        delete memoryManager;
     } catch (const exception& e) {
         cerr << "Exception: " << e.what() << endl;
         return 1;
