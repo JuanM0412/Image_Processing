@@ -105,14 +105,14 @@ Arguments parseArguments(int argc, char* argv[]) {
 void showHelp() {
     cout << "Usage: ./image_processing -i <image_name> -o <resulting_image_name> -a <value> -s <value>\n"
               << "Options:\n"
-              << "  -h, --help              Show this help message\n"
-              << "  -v, --version               Show program version\n"
+              << "  -h, --help                                      Show this help message\n"
+              << "  -v, --version                                   Show program version\n"
               << "  -i, --input_image_name <image_name>             Load specified image\n"
-              << "  -o, --output_image_name <resulting_image_name>              Save resulting image with specified name\n"
-              << "  -a, --angle <value>             Rotate image with specified angle\n"
-              << "  -xs, --x_scale <value>             Scale image with specified scale (in X)\n"
-              << "  -xs, --x_scale <value>             Scale image with specified scale (in Y)\n"
-              << "  -b, --buddy_system              Activate buddy system mode (by default the program doesn't use buddy system)\n";
+              << "  -o, --output_image_name <resulting_image_name>  Save resulting image with specified name\n"
+              << "  -a, --angle <value>                             Rotate image with specified angle\n"
+              << "  -xs, --x_scale <value>                          Scale image with specified scale (in X)\n"
+              << "  -ys, --y_scale <value>                          Scale image with specified scale (in Y)\n"
+              << "  -b, --buddy_system                              Activate buddy system mode (not by default)\n";
 }
 
 void showVersion() {
