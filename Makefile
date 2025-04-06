@@ -24,7 +24,7 @@ endif
 all: $(TARGET)
 
 $(TARGET): $(BIN_DIR) $(OBJ_DIR) $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) -lpsapi
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -c $< -o $@
