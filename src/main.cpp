@@ -18,33 +18,33 @@
 using namespace std;
 using namespace std::chrono;
 
-void printMemoryUsage(const std::string& label) {
+void printMemoryUsage(const string& label) {
 #ifdef _WIN32
     PROCESS_MEMORY_COUNTERS_EX memInfo;
     GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memInfo, sizeof(memInfo));
     SIZE_T memUsed = memInfo.WorkingSetSize;
-    std::cout << "[Memory] " << label << ": " << memUsed / (1024.0 * 1024.0) << " MB\n";
+    cout << "[Memory] " << label << ": " << memUsed / (1024.0 * 1024.0) << " MB\n";
 #else
-    std::ifstream statm("/proc/self/status");
-    std::string line;
-    while (std::getline(statm, line)) {
+    ifstream statm("/proc/self/status");
+    string line;
+    while (getline(statm, line)) {
         if (line.find("VmRSS:") == 0) {
-            std::istringstream iss(line);
-            std::string key;
+            istringstream iss(line);
+            string key;
             size_t value;
-            std::string unit;
+            string unit;
             iss >> key >> value >> unit;
-            std::cout << "[Memory] " << label << ": " << (value / 1024.0) << " MB\n";
+            cout << "[Memory] " << label << ": " << (value / 1024.0) << " MB\n";
             break;
         }
     }
 #endif
 }
 
-void printElapsedTime(const std::string& label, high_resolution_clock::time_point start) {
+void printElapsedTime(const string& label, high_resolution_clock::time_point start) {
     auto end = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(end - start).count();
-    std::cout << "[Time] " << label << ": " << duration << " ms\n";
+    cout << "[Time] " << label << ": " << duration << " ms\n";
 }
 
 int main(int argc, char *argv[]) {
@@ -97,8 +97,6 @@ int main(int argc, char *argv[]) {
         } catch (const std::exception& e) {
             cerr << "Transformation failed: " << e.what() << endl;
         }
-
-        delete memoryManager;
     } catch (const exception& e) {
         cerr << "Exception: " << e.what() << endl;
         return 1;
