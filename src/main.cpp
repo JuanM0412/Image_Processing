@@ -36,15 +36,13 @@ int main(int argc, char *argv[]) {
         }
 
         try {
-            Image transformed_image = Image::scaleImage(args.xScale, args.yScale, image, args.mode);
-            transformed_image = Image::rotateImage(args.angle, transformed_image, args.mode);
+            image = Image::scaleImage(args.xScale, args.yScale, image, args.mode);
+            image = Image::rotateImage(args.angle, image, args.mode);
 
-            transformed_image.saveImage(args.outputImageName);
+            image.saveImage(args.outputImageName);
         } catch (const std::exception& e) {
             cerr << "Transformation failed: " << e.what() << endl;
         }
-
-        delete memoryManager;
     } catch (const exception& e) {
         cerr << "Exception: " << e.what() << endl;
         return 1;
