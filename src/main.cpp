@@ -2,29 +2,15 @@
 #include "../include/image.h"
 #include "../include/buddy_image_memory_manager.h"
 #include "../include/vector_image_memory_manager.h"
-#include <iostream>
-#include <string>
-#include <vector>
 #include <chrono>
-
-#ifdef _WIN32
-#include <windows.h>
-#include <psapi.h>
-#else
+#include <sys/resource.h>
 #include <fstream>
 #include <sstream>
-#endif
 
 using namespace std;
 using namespace std::chrono;
 
 void printMemoryUsage(const string& label) {
-#ifdef _WIN32
-    PROCESS_MEMORY_COUNTERS_EX memInfo;
-    GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memInfo, sizeof(memInfo));
-    SIZE_T memUsed = memInfo.WorkingSetSize;
-    cout << "[Memory] " << label << ": " << memUsed / (1024.0 * 1024.0) << " MB\n";
-#else
     ifstream statm("/proc/self/status");
     string line;
     while (getline(statm, line)) {
@@ -38,7 +24,13 @@ void printMemoryUsage(const string& label) {
             break;
         }
     }
-#endif
+}
+
+void printPeakMemoryUsage(const string& label) {
+    struct rusage usage;
+    getrusage(RUSAGE_SELF, &usage);
+    cout << "[Peak Memory] " << label << ": " 
+         << (usage.ru_maxrss / 1024.0) << " MB (Peak)" << endl;
 }
 
 void printElapsedTime(const string& label, high_resolution_clock::time_point start) {
@@ -94,6 +86,7 @@ int main(int argc, char *argv[]) {
             transformed_image.saveImage(args.outputImageName);
             printElapsedTime("Saving", start);
             printMemoryUsage("After saving");
+            printPeakMemoryUsage("Peak Memory Usage");
         } catch (const std::exception& e) {
             cerr << "Transformation failed: " << e.what() << endl;
         }

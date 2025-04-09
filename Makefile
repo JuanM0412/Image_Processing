@@ -13,13 +13,8 @@ SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/arg_parser.cpp $(SRC_DIR)/image.cpp $(SRC_
 
 OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
-ifeq ($(OS),Windows_NT)
-    MKDIR = mkdir
-    RM = rmdir /s /q
-else
-    MKDIR = mkdir -p
-    RM = rm -rf
-endif
+MKDIR = mkdir -p
+RM = rm -rf
 
 all: $(TARGET)
 
