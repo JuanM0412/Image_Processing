@@ -1,84 +1,84 @@
-# Time and Memory Complexity Analysis
-## Image Operations
-### Image Loading (loadImage)
-- Time Complexity: O(W × H)
-Iterates through each pixel once to transfer from the STB buffer to the memory manager.
+# Image Processing
 
-- Memory Complexity: O(W × H)
-Uses temporary STB buffer and final internal storage.
+Una herramienta simple de línea de comandos para rotar y escalar imágenes usando C++.
 
-### Image Scaling (scaleImage)
-- Time Complexity: O(W_new × H_new)
-For each output pixel, it computes the corresponding input pixel (nearest-neighbor).
+## Características
 
-- Memory Complexity: O(W_new × H_new)
-Allocates a new image of the scaled dimensions.
+- Rotación de imágenes en ángulos específicos
+- Escalado de imágenes a diferentes tamaños
+- Soporte para múltiples formatos de imagen (PNG, JPEG, BMP)
+- Interfaz de línea de comandos fácil de usar
+- Manejo de memoria eficiente
 
-### Image Rotation (rotateImage)
-- Time Complexity: O(W_rot × H_rot)
-Processes each output pixel to map to an input pixel.
+## Requisitos
 
-- Memory Complexity: O(W_rot × H_rot)
-Allocates memory for the rotated image.
+- Compilador de C++ (g++ recomendado)
+- Make
 
-### Image Saving (saveImage)
-- Time Complexity: O(W × H)
-Copies each pixel to the output buffer.
+## Instalación
 
-- Memory Complexity: O(W × H)
-Temporary buffer for saving to output format.
+1. Clona el repositorio:
+    ```
+    git clone https://github.com/JuanM0412/Image_Processing.git
+    ```
+2. Entra a la nueva capeta que se creó:
+    ```
+    cd Image_Processing
+    ```
 
-## Memory Management Operations
-### Vector Memory Manager
-- Allocation: O(W × H) — Resizes a 2D std::vector
+## Compilación
+1. Ejecuta el siguiente comando que se va a encargar de compilar todo el programa:
+    ```
+    make
+    ```
+3. Ejecuta el código:
+    ```
+    ./bin/image_processing -h
+    ```
 
-- Pixel Access: O(1) — Direct indexing via data[y][x]
+## Uso
 
--  Clone: O(W × H) — Deep copy of the vector
+```
+Usage: ./image_processing -i <image_name> -o <resulting_image_name> -a <value> -s <value>
+Options:
+  -h, --help                                      Show this help message
+  -v, --version                                   Show program version
+  -i, --input_image_name <image_name>             Load specified image
+  -o, --output_image_name <resulting_image_name>  Save resulting image with specified name
+  -a, --angle <value>                             Rotate image with specified angle
+  -xs, --x_scale <value>                          Scale image with specified scale (in X)
+  -ys, --y_scale <value>                          Scale image with specified scale (in Y)
+  -b, --buddy_system                              Activate buddy system mode (not by default)
+```
 
-- Space Complexity: O(W × H)
-Additional overhead due to STL vector structure and non-contiguous rows (cache inefficiency possible)
+## Estructura del Proyecto
 
-## Buddy Memory Manager
-- Allocation: O(log M) — Where M is total memory; uses binary splitting to allocate
+```
+├── include
+│   ├── arg_parser.h
+│   ├── buddy_allocator.h
+│   ├── buddy_image_memory_manager.h
+│   ├── IImageMemoryManager.h
+│   ├── image.h
+│   ├── stb_image.h
+│   ├── stb_image_write.h
+│   └── vector_image_memory_manager.h
+├── Makefile
+├── README.md
+├── src
+│   ├── arg_parser.cpp
+│   ├── buddy_allocator.cpp
+│   ├── buddy_image_memory_manager.cpp
+│   ├── image.cpp
+│   ├── main.cpp
+│   ├── stb_wrapper.cpp
+│   └── vector_image_memory_manager.cpp     
+```
 
-- Pixel Access: O(1) — Uses pointer arithmetic
+## Autores
 
-- Clone: O(W × H) — memcpy with allocation overhead
-
-- Space Complexity: O(W × H) + internal fragmentation
-Efficient for power-of-two allocations, but may waste space.
-
-# Optimization Opportunities
-## Memory Manager Selection:
-
-Buddy system is more efficient for large allocations due to contiguous memory.
-
-Vector-based is easier to implement but may suffer from cache misses and memory fragmentation.
-
-## Scaling and Rotation Quality:
-
-Nearest-neighbor is fast but low-quality.
-
-Consider bilinear or bicubic interpolation for higher-quality image transformations (at a computational cost).
-
-## Memory Reuse:
-
-Avoid creating new memory managers per operation.
-
-Reuse or pool memory to reduce allocation overhead.
-
-## Parallelization:
-
-Image operations are highly parallelizable.
-
-Use multi-threading (e.g., std::thread, OpenMP) to speed up processing on large images.
-
-## General complexity: 
-- Time Complexity: O(pixels) for all operations (optimal for pixel-wise image processing)
-
-- Memory Complexity: O(pixels) with trade-offs:
-
-- Buddy: More efficient for large, long-lived, and contiguous allocations; may suffer from internal fragmentation.
-
-- Vector: Simpler, suitable for smaller images; may lead to non-contiguous memory and higher overhead.
+- Juan Manuel Gómez Piedrahita
+- Luisa María Álvarez García
+- Miguel Ángel Hoyos
+- Santiago Neusa Ruiz
+- Sebastián Restrepo Ortiz

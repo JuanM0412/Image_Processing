@@ -42,7 +42,6 @@ void printElapsedTime(const string& label, high_resolution_clock::time_point sta
 int main(int argc, char *argv[]) {
     Arguments args = parseArguments(argc, argv);
     if (!args.valid) {
-        cerr << "Invalid arguments provided.\n";
         return 1;
     }
 
